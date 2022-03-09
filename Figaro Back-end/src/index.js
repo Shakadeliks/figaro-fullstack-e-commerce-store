@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 // ROUTES
 const userRoute = require('./routes/user');
-const authRoute = require('./Routes/auth')
+const authRoute = require('./Routes/auth');
+const productRoute = require('./Routes/product');
+const cartRoute = require('./Routes/cart');
 
 // environment variable 
 env.config();
@@ -27,5 +29,6 @@ app.get("/api/test", () => {
 app.use(bodyParser());
 app.use('/api/auth', authRoute);
 app.use("/api/users", userRoute);
-
+app.use("/api/products", productRoute);
+app.use("/api/cart", cartRoute);
 
