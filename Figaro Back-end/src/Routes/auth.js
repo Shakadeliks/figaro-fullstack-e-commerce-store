@@ -29,6 +29,7 @@ router.post("/signup", async (req, res) => {
     } catch(error) {
         // code to be sent client-side for err/failure
         res.status(500).json(error);
+        console.log(error);
     }          
 })
 

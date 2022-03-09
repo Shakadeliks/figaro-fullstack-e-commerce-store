@@ -1,7 +1,8 @@
 const express = require('express');
+const { verify } = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../Models/User')
-const { verifyTokenAndAuthorization, verifyToken } = require("./verifyToken")
+const { verifyTokenAndAuthorization, verifyToken, verifyTokenAndAdmin } = require("./verifyToken")
 
 //UPDATING USER INFORMATION
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
@@ -29,5 +30,46 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
     }
 })
 
+// DELETE USER
+
+router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id)
+        res.status(200).json("User has been deleted...")
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+//GET USER
+router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        const { password, ...otherData } = user._doc; 
+
+        res.status(200).json(otherData);
+
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+// GET ALL USERS
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+// included query if admin wants to access only latest added users etc.
+    const query = req.query.new;
+
+    try {
+        const users = query ? await User.find().sort({ _id: -1 }).limit(5) : await User.find();
+
+        res.status(200).json(users);
+
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+// GET USER STATS
 module.exports = router; 
 
