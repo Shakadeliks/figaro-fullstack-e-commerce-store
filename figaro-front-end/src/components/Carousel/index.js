@@ -41,7 +41,7 @@ const Carousel = () => {
         {/* imported carouselItems as array of objects to map through to create the different slides */}
         <CarouselWrapper carouselIndex={carouselIndex}>
           {carouselItems.map((item) => (
-            <SlideContainer>
+            <SlideContainer key={item.id}>
               <ImgContainer>
                 <Img src={item.img}/>
               </ImgContainer>         

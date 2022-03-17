@@ -1,8 +1,21 @@
+//CAROUSEL IMAGES
 import CarouselImg1 from './assets/carousel-img1.jpg';
 import CarouselImg2 from './assets/carousel-img2.jpg';
 import CarouselImg3 from './assets/carousel-img3.jpg';
 import CarouselImg4 from './assets/carousel-img4.jpg';
 
+// CATEGORIES SECTION IMAGES
+import HatImg from './assets/categoryImgs/hat category.jpg';
+import TshirtImg from './assets/categoryImgs/tshirt category.jpg';
+import PantsImg from './assets/categoryImgs/pants category.jpg';
+import SneakerImg from './assets/categoryImgs/sneaker category.jpg';
+
+//POPULAR PRODUCTS SECTION IMAGES
+
+import PopularHat from './assets/popularProducts/hats1.webp';
+import PopularPants from './assets/popularProducts/pants1.webp';
+import PopularSneakers from './assets/popularProducts/sneakers1.webp';
+import PopularTshirt from './assets/popularProducts/t-shirt1.webp';
 
 export const carouselItems = [
     {
@@ -39,21 +52,40 @@ export const productCategories = [
     {
         id: 1,
         title: "hats",
-        img: ""
+        img: HatImg
     },
     {
         id: 2,
-        title: "shirts",
-        img: ""
+        title: "t-shirts",
+        img: TshirtImg
     },
     {
-        id: 1,
+        id: 3,
         title: "pants",
-        img: ""
+        img: PantsImg
     },
     {
-        id: 1,
+        id: 4,
         title: "sneakers",
-        img: ""
+        img: SneakerImg
+    },
+]
+
+export const popularProducts = [
+    {
+        id: 1,
+        img: PopularHat
+    },
+    {
+        id: 2,
+        img: PopularPants
+    },
+    {
+        id: 3,
+        img: PopularSneakers
+    },
+    {
+        id: 4,
+        img: PopularTshirt
     },
 ]
