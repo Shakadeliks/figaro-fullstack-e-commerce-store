@@ -3,7 +3,9 @@ import Carousel from "./components/Carousel";
 import Navbar from "./components/Navbar";
 import {createTheme, ThemeProvider } from "@material-ui/core";
 import Categories from "./components/Categories";
-import Product from "./components/Product.js";
+import Products from "./components/Products";
+import Newsletter from "./components/Newsletter";
+import Footer from "./components/Footer";
 
 const MuiTheme = createTheme({
   palette: {
@@ -23,7 +25,9 @@ function App() {
         <Navbar />
         <Carousel />
         <Categories />
-        <Product />
+        <Products />
+        <Newsletter />
+        <Footer />
       </div>
     </ThemeProvider>
   );
