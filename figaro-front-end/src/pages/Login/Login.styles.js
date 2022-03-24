@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import LoginBg2 from "../../assets/login-background2.jpg";
+import { mobile } from "../../responsive"
 
 export const Container = styled.div`
     width: 100vw;
@@ -15,6 +16,9 @@ export const Wrapper = styled.div`
     padding: 1.25rem;
     width: 25%;
     background-color: ${ ({ theme: {secondary} }) => secondary.main};
+
+    ${ mobile({ width: "75%" })};
+    
 `
 
 export const Form = styled.form`

@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { mobile } from "../../responsive"
 
 export const Container = styled.div`
 
@@ -7,6 +8,9 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
     padding: 3.125rem;
     display: flex;
+
+    ${ mobile({ padding: "0.625rem", flexDirection: "column" })};
+
 `
 
 export const ImgContainer = styled.div`
@@ -17,11 +21,17 @@ export const Image = styled.img`
     width: 100%;
     height: 90vh;
     object-fit: cover;
+
+    ${ mobile({ height: "40vh" })};
+
 `
 
 export const InfoContainer = styled.div`
     flex: 1;
     padding: 0rem 3.125rem;
+
+    ${ mobile({ padding: "0.625rem" })};
+
 `
 
 export const Title = styled.h2`
@@ -41,6 +51,9 @@ export const Price = styled.span`
 export const FilterContainer = styled.div`
     width: 50%;
     margin: 1.875rem 0rem;
+
+    ${ mobile({ width: "100%" })};
+
 `
 
 export const Filter = styled.div`
@@ -68,6 +81,9 @@ export const AddContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 50%;
+
+    ${ mobile({ width: "100%" })};
+
 
 `
 

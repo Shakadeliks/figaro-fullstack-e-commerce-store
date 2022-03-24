@@ -1,7 +1,13 @@
 import styled from 'styled-components';
+import { mobile } from "../../responsive";
+
 
 export const Container = styled.div`
     display: flex;
+    background-color: ${ ({ theme: {secondary} }) => secondary.main};
+
+    ${ mobile({ flexDirection: "column" })};
+
 `
 
 export const Left = styled.div`
@@ -20,6 +26,9 @@ export const Right = styled.div`
 export const Center = styled.div`
    flex: 1;
    padding:  1.25rem;
+
+   ${ mobile({ display: "none" })};
+   
 `
 
 export const Title = styled.h3`

@@ -23,7 +23,7 @@ function App() {
   return (
     <ThemeProvider MuiTheme={MuiTheme}>
       <div className="App">
-        <Cart />
+        <ProductPage />
       </div>
     </ThemeProvider>
   );
