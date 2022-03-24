@@ -1,11 +1,12 @@
-
-import Carousel from "./components/Carousel";
-import Navbar from "./components/Navbar";
 import {createTheme, ThemeProvider } from "@material-ui/core";
-import Categories from "./components/Categories";
-import Products from "./components/Products";
-import Newsletter from "./components/Newsletter";
-import Footer from "./components/Footer";
+import Cart from "./pages/Cart";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import ProductList from "./pages/ProductList";
+import ProductPage from "./pages/ProductPage";
+import SignUp from "./pages/SignUp";
+
+
 
 const MuiTheme = createTheme({
   palette: {
@@ -22,12 +23,7 @@ function App() {
   return (
     <ThemeProvider MuiTheme={MuiTheme}>
       <div className="App">
-        <Navbar />
-        <Carousel />
-        <Categories />
-        <Products />
-        <Newsletter />
-        <Footer />
+        <Cart />
       </div>
     </ThemeProvider>
   );
