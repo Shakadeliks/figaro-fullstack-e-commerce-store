@@ -52,22 +52,26 @@ export const productCategories = [
     {
         id: 1,
         title: "hats",
-        img: HatImg
+        img: HatImg,
+        categ: "hats"
     },
     {
         id: 2,
         title: "t-shirts",
-        img: TshirtImg
+        img: TshirtImg,
+        categ: "tshirts"
     },
     {
         id: 3,
         title: "pants",
-        img: PantsImg
+        img: PantsImg,
+        categ: "pants"
     },
     {
         id: 4,
         title: "sneakers",
-        img: SneakerImg
+        img: SneakerImg,
+        categ: "pants"
     },
 ]
 

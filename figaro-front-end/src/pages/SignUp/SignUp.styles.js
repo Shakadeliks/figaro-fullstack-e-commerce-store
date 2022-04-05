@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import LoginBg from "../../assets/login-background.jpg";
-import { mobile } from "../../responsive"
+import { mobile, largeMobile, tablet } from "../../responsive"
 
 
 export const Container = styled.div`
@@ -18,7 +18,9 @@ export const Wrapper = styled.div`
     width: 40%;
     background-color: ${ ({ theme: {secondary} }) => secondary.main};
 
-    ${ mobile({ width: "75%" })};
+    ${ mobile({ width: "90%" })};
+    ${ largeMobile({ width: "75%" })};
+    ${ tablet({ width: "60%" })};
 
 `
 

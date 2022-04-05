@@ -1,13 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container } from './Products.styles';
 import { popularProducts } from '../../data';
 import Product from '../Product.js';
+import axios from "axios"
 
-const Products = () => {
+
+const Products = ({ categ, sort }) => {
+
+  const [products, setProducts] = useState([]);
+// fetching of product data frm api
+  useEffect( () => {
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(
+          categ 
+            ? `http://localhost:2000/api/products?category=${categ}` 
+            : `http://localhost:2000/api/products`
+        );
+        setProducts(res.data);
+      } catch (error) { }
+    }
+    getProducts();
+  }, [categ])
+
+  useEffect( () => {
+    if( sort === "newest") {
+      products.sort( (a, b) => a.createdAt - b.createdAt)
+    } else if ( sort === "lowest") {
+      products.sort( (a, b) => a.price - b.price)
+    } else {
+      products.sort( (a, b) => b.price - a.price)
+    }
+  }, [sort])
+
   return (
     <Container>
-        {popularProducts.map((item) => (
-            <Product item={item} key={item.id}/>
+        {products.map((item, index) => (
+            <Product item={item} key={index}/>
         ))}
     </Container>
   )

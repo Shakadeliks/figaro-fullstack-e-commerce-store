@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mobile, mediumTablet } from "../../responsive";
 
 
 export const Container = styled.div`
@@ -15,6 +15,7 @@ export const Image = styled.img`
     object-fit: cover;
 
     ${ mobile({ height: "30vh" })}
+    ${ mediumTablet({ height: "50vh" })}
 
 `
 

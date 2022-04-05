@@ -1,4 +1,6 @@
 import styled from "styled-components"
+import { mobile, mediumTablet, largeMobile } from "../../responsive"
+
 
 export const Container = styled.div`
 
@@ -6,6 +8,9 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
     padding: 1.25rem;
+
+    ${ mediumTablet({ padding: "0.625rem" })};
+
 `
 
 export const Title = styled.h1`
@@ -34,6 +39,8 @@ export const TopBtn = styled.button`
 `
 
 export const TopInfo = styled.div`
+    ${ mediumTablet({ display: "none" })};
+
     
 `
 
@@ -46,6 +53,9 @@ export const TopText = styled.span`
 export const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
+    ${ mediumTablet({ flexDirection: "column" })};
+
+
 `
 
 export const ProductInfo = styled.div`
@@ -56,6 +66,8 @@ export const ProductInfo = styled.div`
 export const Product = styled.div`
     display: flex;
     justify-content: space-between;
+    ${ mobile({ flexDirection: "column" })};
+
 `
 
 export const ProductDetails = styled.div`
@@ -100,11 +112,15 @@ export const ProductAmountContainer = styled.div`
 export const ProductAmount = styled.div`
     font-size: 1.5rem;
     margin: 0.3125rem;
+    ${ mobile({ margin: "0.3125rem 0.9375rem" })};
+
 `
 
 export const ProductPrice = styled.div`
     font-size: 1.875rem;
     font-weight: 400;
+    ${ mobile({ marginBottom: "1.25rem" })};
+
 `
 
 export const Break = styled.hr`

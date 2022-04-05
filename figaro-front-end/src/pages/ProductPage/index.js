@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 import Newsletter from '../../components/Newsletter';
@@ -23,34 +23,57 @@ import {
     } from './ProductPage.styles';
 import { productCategories } from '../../data';
 import { Add, Remove } from '@material-ui/icons';
-
+import { useLocation } from 'react-router-dom';
+import axios, { Axios } from 'axios';
+import {publicRequest} from "../../requestMethods"
 
 const ProductPage = () => {
+
+  const location = useLocation();
+  let id = location.pathname.split("/")[2];
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get(`/products/find/${id}`);
+        setProduct(res.data)
+        console.log(product)
+      } catch (error) {
+        
+      }
+    }
+
+    getProduct();
+
+  }, [id])
+
+  console.log(product)
+
   return (
     <Container>
         <Navbar />
         <Wrapper>
             <ImgContainer>
-                <Image src={productCategories[0].img} />
+                <Image src={product.img} />
             </ImgContainer>
             <InfoContainer>
               <Title>
-                Cool hat 
+                { product.title }
               </Title>
-              <Desc>Halloumi mozzarella macaroni cheese. Parmesan manchego pecorino cream cheese fromage edam halloumi brie. Taleggio cauliflower cheese monterey jack airedale dolcelatte mozzarella cheesy grin caerphilly. Cheese slices babybel fromage frais.</Desc>
-              <Price>$20</Price>
+              <Desc>{ product.desc }</Desc>
+              <Price>${ product.price }</Price>
               <FilterContainer>
                 <Filter>
                   <FilterTitle>
                     size
                   </FilterTitle>
-                  <FilterSize>
-                    <FilterSizeOption>S</FilterSizeOption>
-                    <FilterSizeOption>M</FilterSizeOption>
-                    <FilterSizeOption>L</FilterSizeOption>
-                    <FilterSizeOption>XL</FilterSizeOption>
-                  </FilterSize>
-                  
+                      <FilterSize> 
+                        {product.size.map( (s) => (
+                          <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                        ))}
+                      </FilterSize>  
                 </Filter>
               </FilterContainer>
 

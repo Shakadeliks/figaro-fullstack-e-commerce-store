@@ -1,4 +1,4 @@
-import { FavoriteRounded, ShoppingCartRounded } from '@material-ui/icons';
+import { FavoriteRounded, SearchRounded, ShoppingCartRounded } from '@material-ui/icons';
 import React from 'react'
 import {
     Container,
@@ -6,21 +6,28 @@ import {
     Info,
     Icon,
     Circle } from './Product.style';
+import { Link } from "react-router-dom"    
 
 const Product = ({ item }) => {
   return (
     <Container>
-        <Circle />
+        {/* <Circle /> */}
         <Image src={item.img} />
-        <Info>
-            <Icon>
-                <ShoppingCartRounded />
-            </Icon>
-            <Icon>    
-                <FavoriteRounded />
-            </Icon>
-        </Info>
         
+            <Info>
+                <Icon>
+                    <ShoppingCartRounded />
+                </Icon>
+                
+                <Icon>
+                <Link to={`/products/${item._id}`}>
+                    <SearchRounded style={{ color: "black" }} />
+                </Link>    
+                </Icon>
+                <Icon>    
+                    <FavoriteRounded />
+                </Icon>
+            </Info>
     </Container>
   )
 }

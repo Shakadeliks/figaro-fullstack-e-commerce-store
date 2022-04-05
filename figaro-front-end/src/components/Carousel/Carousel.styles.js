@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { tablet } from "../../responsive";
 
 
 export const Container = styled.div`
@@ -9,7 +9,7 @@ export const Container = styled.div`
     position: relative;
     overflow: hidden;
 
-    ${ mobile({ display: "none" })}
+    ${ tablet({ display: "none" })}
 
 `
 
@@ -38,7 +38,7 @@ export const CarouselWrapper = styled.div`
     display: flex;
     transform: translateX(${props => props.carouselIndex * -100}vw);
 
-    transition: all 1.5s ease
+    transition: all 1.5s ease;
 `
 
 export const SlideContainer = styled.div`
@@ -47,6 +47,8 @@ export const SlideContainer = styled.div`
     display: flex;
     align-items: center;
     background-color:  ${ ({ theme: {primary} }) => primary.light};
+
+    
 `
 
 export const ImgContainer = styled.div`

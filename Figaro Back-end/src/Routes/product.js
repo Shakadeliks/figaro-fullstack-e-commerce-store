@@ -1,8 +1,11 @@
 const express = require('express');
+const app = express();
 const { verify } = require('jsonwebtoken');
 const router = express.Router();
 const Product = require('../Models/Product')
 const { verifyTokenAndAuthorization, verifyToken, verifyTokenAndAdmin } = require("./verifyToken")
+
+
 
 // CREATE PRODUCT
 
@@ -87,6 +90,15 @@ router.get("/", async (req, res) => {
         res.status(500).json(error);
     }
 })
+
+router.get('/', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+    
+    res.send('cors problem fixed:)');
+    });
 
 
 module.exports = router; 

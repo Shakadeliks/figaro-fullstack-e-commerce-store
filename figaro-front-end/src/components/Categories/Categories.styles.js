@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mediumTablet } from "../../responsive";
 
 
 export const Container = styled.div`
@@ -7,6 +7,6 @@ export const Container = styled.div`
     padding: 1.25rem;
     justify-content: space-between;
 
-    ${ mobile({ padding: 0, flexDirection: "column" })}
+    ${ mediumTablet({ padding: 0, flexDirection: "column" })}
 
 `

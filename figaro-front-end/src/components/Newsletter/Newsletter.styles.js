@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mobile, mediumTablet, largeMobile } from "../../responsive";
 
 
 export const Container = styled.div`
@@ -22,7 +22,9 @@ export const Desc = styled.div`
     font-weight: 300;
     margin-bottom: 1.25rem;
 
-    ${ mobile({ textAlign: "center" })};
+    ${ mediumTablet({ textAlign: "center" })};
+    ${ largeMobile({ padding: "0 10%" })};
+
 
 `
 
@@ -34,7 +36,8 @@ export const InputContainer = styled.div`
     justify-content: space-between;
     border: 1px solid ${ ({ theme: {secondary} }) => secondary.dark};
 
-    ${ mobile({ width: "80%" })}
+
+    ${ largeMobile({ width: "80%" })};
 
 
 `

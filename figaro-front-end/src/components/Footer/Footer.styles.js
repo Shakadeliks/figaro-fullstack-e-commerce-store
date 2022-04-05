@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { mobile } from "../../responsive";
+import { mobile, mediumTablet } from "../../responsive";
 
 
 export const Container = styled.div`
@@ -27,7 +27,7 @@ export const Center = styled.div`
    flex: 1;
    padding:  1.25rem;
 
-   ${ mobile({ display: "none" })};
+   ${ mediumTablet({ display: "none" })};
    
 `
 

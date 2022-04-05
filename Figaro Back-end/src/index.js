@@ -10,8 +10,11 @@ const productRoute = require('./Routes/product');
 const cartRoute = require('./Routes/cart');
 const orderRoute = require('./Routes/order');
 const stripeRoute = require('./Routes/stripe');
-
 const cors = require('cors');
+
+//MIDDLEWARE
+
+app.use("/api/checkout", stripeRoute);
 
 // environment variable 
 env.config();
@@ -26,10 +29,6 @@ mongoose.connect(DbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((error) => console.log(error));    
 
 
-app.get("/api/test", () => {
-    console.log("server is running");
-})
-//MIDDLEWARE
 app.use(cors());
 app.use(bodyParser());
 app.use('/api/auth', authRoute);
@@ -37,5 +36,4 @@ app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
-app.use("/api/checkout", stripeRoute);
 

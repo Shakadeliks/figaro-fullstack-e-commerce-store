@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { mobile } from "../../responsive"
+import { mobile, largeMobile, mediumTablet } from "../../responsive"
 
 export const Container = styled.div`
 
@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
     padding: 3.125rem;
     display: flex;
 
-    ${ mobile({ padding: "0.625rem", flexDirection: "column" })};
+    ${ mediumTablet({ padding: "0.625rem", flexDirection: "column" })};
 
 `
 
@@ -23,6 +23,8 @@ export const Image = styled.img`
     object-fit: cover;
 
     ${ mobile({ height: "40vh" })};
+    ${ mediumTablet({ height: "60vh" })};
+
 
 `
 
@@ -30,7 +32,7 @@ export const InfoContainer = styled.div`
     flex: 1;
     padding: 0rem 3.125rem;
 
-    ${ mobile({ padding: "0.625rem" })};
+    ${ largeMobile({ padding: "0.625rem" })};
 
 `
 
