@@ -24,71 +24,104 @@ import {
 import { productCategories } from '../../data';
 import { Add, Remove } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-import axios, { Axios } from 'axios';
 import {publicRequest} from "../../requestMethods"
+import axios from "axios";
+import { addToCart } from "../../Redux/cartRedux";
+import { useDispatch } from 'react-redux';
 
 const ProductPage = () => {
 
   const location = useLocation();
-  let id = location.pathname.split("/")[2];
+  const id = location.pathname.split("/")[2];
 
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
+  
   useEffect(() => {
+
     const getProduct = async () => {
-      try {
-        const res = await publicRequest.get(`/products/find/${id}`);
-        setProduct(res.data)
-        console.log(product)
-      } catch (error) {
-        
-      }
-    }
+
+      const res = await axios.get("http://localhost:2000/api/products/find/" + id);
+
+      setProduct([res.data])
+
+      // return product;
+    };
 
     getProduct();
 
   }, [id])
 
-  console.log(product)
 
+  const handleQuantity = (type) => {
+    type === "minus" ? quantity > 1 && setQuantity(quantity - 1) : setQuantity(quantity + 1)
+    
+  }
+
+  //onclick function to handle adding of product to redux cart state
+  const handleAddToCart = (product, quantityToBeAdded, chosenSize) => {
+    dispatch(addToCart({ product, quantityToBeAdded, size, totalPrice: product[0].price * quantityToBeAdded }));
+  }
+
+  console.log(product);
+  
   return (
     <Container>
         <Navbar />
         <Wrapper>
-            <ImgContainer>
-                <Image src={product.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>
-                { product.title }
-              </Title>
-              <Desc>{ product.desc }</Desc>
-              <Price>${ product.price }</Price>
-              <FilterContainer>
-                <Filter>
-                  <FilterTitle>
-                    size
-                  </FilterTitle>
-                      <FilterSize> 
-                        {product.size.map( (s) => (
-                          <FilterSizeOption key={s}>{s}</FilterSizeOption>
-                        ))}
-                      </FilterSize>  
-                </Filter>
-              </FilterContainer>
 
-              <AddContainer>
-                <AmountContainer>
-                  <Remove style={{cursor: "pointer"}}/>
-                  <Amount>1</Amount>
-                  <Add style={{cursor: "pointer"}}/>
+          {product.map( item => ( 
+            <>
+                <ImgContainer key={item._id}>
+                <Image src={item.img} />
+                </ImgContainer>
+                <InfoContainer>
+                  <Title>
+                    { item.title }
+                  </Title>
+                  <Desc>{ item.desc }</Desc>
+                  <Price>$ { item.price }</Price>
+                  <FilterContainer>
+                    <Filter>
+                      <FilterTitle>
+                        size
+                      </FilterTitle>
+                          <FilterSize onChange={(e) => setSize(e.target.value)}>
+                            <FilterSizeOption value="Choose Size" disabled >Choose Size</FilterSizeOption>
+                            {item.size.map( (s, index) => (
+                              <FilterSizeOption value={s} key={index}>{s}</FilterSizeOption>
+                            ))}
+                          </FilterSize>  
+                    </Filter>
+                  </FilterContainer>
 
-                </AmountContainer>
-                <AddToCartBtn>add to cart</AddToCartBtn>
-              </AddContainer>
-            </InfoContainer>
-        </Wrapper>
+                  <AddContainer>
+                    <AmountContainer>
+                      <Remove
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleQuantity("minus")}
+                      />
+                      <Amount>{quantity}</Amount>
+                      <Add
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleQuantity("plus")}
+                        
+                      />
 
+                    </AmountContainer>
+                    <AddToCartBtn onClick={() => handleAddToCart(product, quantity, size)}>add to cart</AddToCartBtn>
+                  </AddContainer>
+                </InfoContainer>
+            </>
+          ))  
+            
+          
+          }
+          </Wrapper>
+        
         <Newsletter />
         <Footer />
     </Container>

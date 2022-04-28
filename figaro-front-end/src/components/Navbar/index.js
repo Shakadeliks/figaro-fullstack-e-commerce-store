@@ -1,6 +1,6 @@
 import { Badge } from '@material-ui/core';
 import { Close, Menu, ShoppingCartRounded } from '@material-ui/icons';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { styled } from "@material-ui/core";
 import { useTheme } from 'styled-components'
 import {
@@ -14,6 +14,9 @@ import {
     MenuItem,
     BackgroundOverlay
 } from './Navbar.styles';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import { getTotals } from '../../Redux/cartRedux';
 
 const StyledBadge = styled(Badge)({
     "& .MuiBadge-badge": {
@@ -24,9 +27,11 @@ const StyledBadge = styled(Badge)({
 });
 
 const Navbar = () => {
-
+    
     const theme = useTheme();
-
+    const dispatch = useDispatch(); 
+    const quantity = useSelector(state => state.cart.cartTotalQuantity);
+    const cart = useSelector(state => state.cart.cartProducts)
  // state and function to enable toggle between mobile nav open and close
 
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -35,6 +40,12 @@ const Navbar = () => {
         setIsNavOpen(!isNavOpen);
         console.log(isNavOpen)
     }
+
+    useEffect(() => {
+        dispatch(getTotals());
+    }, [cart])
+
+
 
   return (
     <>
@@ -45,18 +56,27 @@ const Navbar = () => {
                     <Menu style={{fontSize: "2rem"}}/>
                 </HamburgerContainer>
                 <LogoCont>
-                    <Logo>
-                        figaro
-                    </Logo>
+                    <Link 
+                        to="/"
+                          style={{
+                              color: "white",
+                               textDecoration: "none"}}
+                    >
+                        <Logo>
+                            figaro
+                        </Logo>
+                    </Link>
                 </LogoCont>
                 {/* this container to display only cart icon on mobile display */}
                 <MobileCartContainer>
-                    <StyledBadge badgeContent={1}>
-                        <ShoppingCartRounded 
-                            color={theme.textCol.textOnPrim} 
-                            style={{fontSize: "2rem"}}
-                        />
-                    </StyledBadge>
+                    <Link to="/cart">
+                        <StyledBadge badgeContent={quantity}>
+                            <ShoppingCartRounded 
+                                color={theme.textCol.textOnPrim} 
+                                style={{fontSize: "2rem"}}
+                            />
+                        </StyledBadge>
+                    </Link>
                 </MobileCartContainer>
                 <BackgroundOverlay isNavOpen={isNavOpen}/>
                 <RightCont isNavOpen={isNavOpen}>
@@ -69,16 +89,20 @@ const Navbar = () => {
                     <MenuItem>
                         Sign In
                     </MenuItem>
+                    
                     <MenuItem>
-                        <StyledBadge 
-                            badgeContent={1} 
-                            
-                        >
-                            <ShoppingCartRounded 
-                                color={theme.textCol.textOnPrim}
-                            />
-                        </StyledBadge>
+                        <Link to="/cart">
+                            <StyledBadge 
+                                badgeContent={quantity} 
+                                
+                            >
+                                <ShoppingCartRounded 
+                                    style={{color: "white"}}
+                                />
+                            </StyledBadge>
+                        </Link>
                     </MenuItem>
+                    
                 </RightCont>
             </NavB>
         </Container>

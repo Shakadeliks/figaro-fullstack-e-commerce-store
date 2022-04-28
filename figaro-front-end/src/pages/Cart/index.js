@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 import {
@@ -27,12 +27,48 @@ import {
     SummaryBtn,
     SummaryItem,
     SummaryItemPrice,
-    SummaryItemText} from './Cart.styles';
+    SummaryItemText,
+    RemoveBtn,
+    RemoveImgContainer} from './Cart.styles';
 import { popularProducts } from "../../data"
 import { Add, Remove } from '@material-ui/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { decreaseCartQuantity, addOneToCart, removeFromCart } from '../../Redux/cartRedux';
+import StripeCheckout from "react-stripe-checkout";
 
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Cart = () => {
+
+    const [ItemsInCart, setItemsInCart] = useState();
+
+    const cart = useSelector(state => state.cart.cartProducts);
+    const totals= useSelector(state => state.cart)
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+
+        setItemsInCart(cart);
+
+    }, [cart]);
+
+    console.log(cart)
+
+    const handleDecreaseCart = (cartItem) => {
+
+        dispatch(decreaseCartQuantity({...cartItem}))
+    }
+
+    const handleIncreaseCart = (cartItem) => {
+
+        dispatch(addOneToCart(cartItem));
+    }
+
+    const handleRemoveFromCart = (cartItem) => {
+        dispatch(removeFromCart(cartItem));
+    }
+
   return (
     <Container>
         <Navbar />
@@ -52,64 +88,54 @@ const Cart = () => {
             </Top>
             <Bottom>
                 <ProductInfo>
-                    <Product>
-                        <ProductDetails>
-                            <Image src={popularProducts[0].img}/>
-                            <Details>
-                                <ProductName>
-                                    <b>product: </b>
-                                    dope hat
-                                </ProductName>
-                                <ProductSize>
-                                    <b>size: </b>
-                                    M
-                                </ProductSize>
-                            </Details>
-                        </ProductDetails>
-                        <PriceDetails>
-                            <ProductAmountContainer>
-                                <Add />
-                                <ProductAmount>
-                                    2
-                                </ProductAmount>
-                                <Remove />
-                            </ProductAmountContainer>
-                            <ProductPrice>$50</ProductPrice>
-                        </PriceDetails>
-                    </Product>
-                    <Break />
-                    <Product>
-                        <ProductDetails>
-                            <Image src={popularProducts[0].img}/>
-                            <Details>
-                                <ProductName>
-                                    <b>product: </b>
-                                    dope hat
-                                </ProductName>
-                                <ProductSize>
-                                    <b>size: </b>
-                                    M
-                                </ProductSize>
-                            </Details>
-                        </ProductDetails>
-                        <PriceDetails>
-                            <ProductAmountContainer>
-                                <Add />
-                                <ProductAmount>
-                                    2
-                                </ProductAmount>
-                                <Remove />
-                            </ProductAmountContainer>
-                            <ProductPrice>$50</ProductPrice>
-                        </PriceDetails>
-                    </Product>
+                      {cart.map(product => (
+                        <>
+                        <Product>
+                            <ProductDetails>
+                                <RemoveImgContainer>
+                                    <Image src={product[0].img}/>
+                                    <RemoveBtn onClick={() => handleRemoveFromCart(product)}>remove</RemoveBtn>    
+                                </RemoveImgContainer>
+                                <Details>
+                                    <ProductName>
+                                        <b>product: </b>
+                                        {product[0].title}
+                                    </ProductName>
+                                    <ProductSize>
+                                        <b>Size: </b>
+                                        {product.cartSize}
+                                    </ProductSize>
+                                </Details>
+                            </ProductDetails>
+                            <PriceDetails>
+                                <ProductAmountContainer>
+                                    <Remove
+                                        style={{ cursor: "pointer" }}
+                                        onClick={()=>handleDecreaseCart(product)}
+                                    />
+                                    <ProductAmount>
+                                        {product.cartQuantity}
+                                    </ProductAmount>
+                                    <Add
+                                        style={{ cursor: "pointer"}}
+                                        onClick={() => handleIncreaseCart(product)}
+                                    />
+                                </ProductAmountContainer>
+                                      <ProductPrice>${product.totalPrice}</ProductPrice>
+                            </PriceDetails>
+                        </Product>
+                        <Break />
+                        </>
+                        ))
+                        }
+                
                 </ProductInfo>
                 <Summary>
 
                     <SummaryTitle>order summary</SummaryTitle>
                     <SummaryItem>
                         <SummaryItemText>subtotal</SummaryItemText>
-                        <SummaryItemPrice>$80</SummaryItemPrice>
+                          <SummaryItemPrice>${totals.cartTotalPrice}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
                         <SummaryItemText>shipping</SummaryItemText>
@@ -117,7 +143,7 @@ const Cart = () => {
                     </SummaryItem>
                     <SummaryItem type="total">
                         <SummaryItemText >total</SummaryItemText>
-                        <SummaryItemPrice>$100</SummaryItemPrice>
+                          <SummaryItemPrice>${totals.cartTotalPrice + 20}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryBtn>checkout</SummaryBtn>
 

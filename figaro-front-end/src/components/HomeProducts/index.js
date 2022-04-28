@@ -34,7 +34,7 @@ const HomeProducts = () => {
   return (
     <Container>
         {randomHomeProducts.map((item) => (
-            <Product item={item} key={item.id}/>
+            <Product item={item} key={item._id}/>
         ))}
     </Container>
   )

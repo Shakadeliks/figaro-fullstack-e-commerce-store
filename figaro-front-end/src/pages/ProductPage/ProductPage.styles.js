@@ -76,7 +76,10 @@ export const FilterSize = styled.select`
     cursor: pointer;
 `
 
-export const FilterSizeOption = styled.option``
+export const FilterSizeOption = styled.option`
+    color: black;
+
+`
 
 export const AddContainer = styled.div`
     display: flex;

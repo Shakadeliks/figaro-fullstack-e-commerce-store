@@ -66,18 +66,43 @@ export const ProductInfo = styled.div`
 export const Product = styled.div`
     display: flex;
     justify-content: space-between;
-    ${ mobile({ flexDirection: "column" })};
+    ${ mediumTablet({ flexDirection: "column" })};
 
 `
 
 export const ProductDetails = styled.div`
     flex: 2;
     display: flex;
+
+    ${ mediumTablet({ flexDirection: "column" })};
+
+`
+
+export const RemoveImgContainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
 `
 
 
 export const Image = styled.img`
     width: 12.5rem;
+`
+
+export const RemoveBtn = styled.button`
+    width: 80%;
+    margin-top: 1rem;
+    padding: 0.625rem;
+    border: none;
+    text-transform: uppercase;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+
+    ${ mediumTablet({ width: "50%" })};
+
 `
 
 
@@ -86,10 +111,15 @@ export const Details = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
+    ${ mediumTablet({ alignItems: "center" })};
+
 `
 
  
-export const ProductName = styled.span``
+export const ProductName = styled.span`
+    text-transform: capitalize;
+`
 
 
 export const ProductSize = styled.span``

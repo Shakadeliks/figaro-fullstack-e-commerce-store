@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 
 const Product = ({ item }) => {
   return (
-    <Container>
+    <Container key={item._id}>
         {/* <Circle /> */}
         <Image src={item.img} />
         
@@ -20,7 +20,7 @@ const Product = ({ item }) => {
                 </Icon>
                 
                 <Icon>
-                <Link to={`/products/${item._id}`}>
+                <Link to={`/product/${item._id}`}>
                     <SearchRounded style={{ color: "black" }} />
                 </Link>    
                 </Icon>
