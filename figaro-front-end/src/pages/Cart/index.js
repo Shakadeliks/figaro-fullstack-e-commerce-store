@@ -35,25 +35,20 @@ import { Add, Remove } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { decreaseCartQuantity, addOneToCart, removeFromCart } from '../../Redux/cartRedux';
 import StripeCheckout from "react-stripe-checkout";
+import { userRequest } from "../../requestMethods";
+import {useNavigate} from "react-router-dom";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Cart = () => {
 
-    const [ItemsInCart, setItemsInCart] = useState();
+    // const [ItemsInCart, setItemsInCart] = useState();
 
     const cart = useSelector(state => state.cart.cartProducts);
-    const totals= useSelector(state => state.cart)
-
+    const totals = useSelector(state => state.cart)
+    const [stripeToken, setStripeToken] = useState(null);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-
-        setItemsInCart(cart);
-
-    }, [cart]);
-
-    console.log(cart)
+    const navigate = useNavigate();
 
     const handleDecreaseCart = (cartItem) => {
 
@@ -68,6 +63,25 @@ const Cart = () => {
     const handleRemoveFromCart = (cartItem) => {
         dispatch(removeFromCart(cartItem));
     }
+
+    const onToken = (token) => {
+        setStripeToken(token)
+    }
+
+    useEffect(() => {
+        const makeRequest = async () => {
+            try {
+                const res = await userRequest.post("/checkout/payment", {
+                    tokenId: stripeToken.id,
+                    amount: 500,
+                })
+                console.log(res);
+                navigate("/success", {state: { data: res.data, products: cart, totals: totals }});
+            } catch {}
+
+        }
+        stripeToken && makeRequest();
+    }, [stripeToken, totals.cartTotalPrice, navigate])
 
   return (
     <Container>
@@ -144,8 +158,19 @@ const Cart = () => {
                     <SummaryItem type="total">
                         <SummaryItemText >total</SummaryItemText>
                           <SummaryItemPrice>${totals.cartTotalPrice + 20}</SummaryItemPrice>
-                    </SummaryItem>
-                    <SummaryBtn>checkout</SummaryBtn>
+                      </SummaryItem>
+                      <StripeCheckout 
+                        name="FIGARO"
+                        billingAddress
+                        shippingAddress
+                        description={`Your total is $${totals.cartTotalPrice + 20}`}
+                        amount={(totals.cartTotalPrice + 20) * 100}
+                        token={onToken}
+                        stripeKey={KEY}
+                      >
+                        <SummaryBtn>checkout</SummaryBtn>
+
+                      </StripeCheckout>
 
                 </Summary>
                 

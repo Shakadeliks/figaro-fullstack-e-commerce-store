@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const env = require('dotenv');
+const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 // ROUTES
@@ -14,11 +14,9 @@ const cors = require('cors');
 
 //MIDDLEWARE
 
-app.use("/api/checkout", stripeRoute);
 
 // environment variable 
-env.config();
-
+dotenv.config();
 //MONGODB CONNECTION 
 // mongodb+srv://olwethumatiwana:<password>@figaro.nekq8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
@@ -29,9 +27,12 @@ mongoose.connect(DbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((error) => console.log(error));    
 
 
-app.use(cors());
+app.use(cors({
+    origin: "*",
+}));
 app.use(bodyParser());
 app.use('/api/auth', authRoute);
+app.use("/api/checkout", stripeRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);

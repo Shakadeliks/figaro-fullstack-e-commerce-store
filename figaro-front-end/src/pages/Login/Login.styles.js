@@ -55,11 +55,20 @@ export const SubmitBtn = styled.button`
     transition: all 0.35s ease-in-out;
     margin-bottom: 0.625rem;
 
+    &:disabled{
+        background-color: gray;
+        cursor: not-allowed;
+    }
+
     &:hover {
         background-color: white;
         color: black;
 
     }
+`
+
+export const Error = styled.span`
+    color: red;
 `
 
 export const Link = styled.a`
