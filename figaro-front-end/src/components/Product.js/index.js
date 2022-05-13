@@ -11,18 +11,14 @@ import { Link } from "react-router-dom"
 const Product = ({ item }) => {
   return (
     <Container key={item._id}>
-        {/* <Circle /> */}
         <Image src={item.img} />
         
             <Info>
+            
                 <Icon>
-                    <ShoppingCartRounded />
-                </Icon>
-                
-                <Icon>
-                <Link to={`/product/${item._id}`}>
-                    <SearchRounded style={{ color: "black" }} />
-                </Link>    
+                    <Link to={`/product/${item._id}`}>
+                        <SearchRounded style={{ color: "black" }} />
+                    </Link>    
                 </Icon>
                 <Icon>    
                     <FavoriteRounded />

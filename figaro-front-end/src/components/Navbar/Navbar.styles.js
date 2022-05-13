@@ -25,7 +25,6 @@ export const NavB = styled.div`
 `
 
 export const BackgroundOverlay = styled.div`
-    /* display: none; */
 
     ${ largeMobile({ 
 
@@ -107,7 +106,7 @@ export const CloseBtnContainer = styled.div`
 `
 
 export const MenuItem = styled.div`
-    cursor: pointer;
+    cursor:${props => !props.user && "pointer"};
     margin-left: 1.5rem;
     display: ${ props => props.closeBtn === "true" && "none"};
 

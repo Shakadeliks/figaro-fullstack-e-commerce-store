@@ -48,7 +48,6 @@ const ProductPage = () => {
 
       setProduct([res.data])
 
-      // return product;
     };
 
     getProduct();

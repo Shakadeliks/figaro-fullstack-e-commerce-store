@@ -36,16 +36,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { decreaseCartQuantity, addOneToCart, removeFromCart } from '../../Redux/cartRedux';
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../../requestMethods";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
+
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Cart = () => {
 
-    // const [ItemsInCart, setItemsInCart] = useState();
-
     const cart = useSelector(state => state.cart.cartProducts);
     const totals = useSelector(state => state.cart)
+    const quantity = useSelector(state => state.cart.cartTotalQuantity);
+
     const [stripeToken, setStripeToken] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Cart = () => {
             try {
                 const res = await userRequest.post("/checkout/payment", {
                     tokenId: stripeToken.id,
-                    amount: 500,
+                    amount: totals.cartTotalPrice,
                 })
                 console.log(res);
                 navigate("/success", {state: { data: res.data, products: cart, totals: totals }});
@@ -89,92 +90,104 @@ const Cart = () => {
 
         <Wrapper>
             <Title>your cart</Title>
-            <Top>
+            {cart.length === 0 ? (
+                <>
+                    <Top>
+                        <TopText style={{ textDecoration: 'none'}}>Your cart is empty</TopText>
+                        <TopBtn><Link to="/" style={{textDecoration: "none", color: "black"}}>continue shopping</Link></TopBtn>
+                    </Top>
+                </>      
+                ) 
+                : (
+                <>      
+                <Top>
 
-                <TopBtn>continue shopping</TopBtn>
-                <TopInfo>
-                    <TopText>shopping bag(2)</TopText>
-                    <TopText>your wishlist(2)</TopText>
+                    <TopBtn>continue shopping</TopBtn>
+                    <TopInfo>
+                        <TopText>shopping bag({quantity})</TopText>
+                        {/* <TopText>your wishlist(2)</TopText> */}
 
-                </TopInfo>
-                <TopBtn type='filled'>checkout</TopBtn>
+                    </TopInfo>
+                    <TopBtn type='filled'>checkout</TopBtn>
 
-            </Top>
-            <Bottom>
-                <ProductInfo>
-                      {cart.map(product => (
-                        <>
-                        <Product>
-                            <ProductDetails>
-                                <RemoveImgContainer>
-                                    <Image src={product[0].img}/>
-                                    <RemoveBtn onClick={() => handleRemoveFromCart(product)}>remove</RemoveBtn>    
-                                </RemoveImgContainer>
-                                <Details>
-                                    <ProductName>
-                                        <b>product: </b>
-                                        {product[0].title}
-                                    </ProductName>
-                                    <ProductSize>
-                                        <b>Size: </b>
-                                        {product.cartSize}
-                                    </ProductSize>
-                                </Details>
-                            </ProductDetails>
-                            <PriceDetails>
-                                <ProductAmountContainer>
-                                    <Remove
-                                        style={{ cursor: "pointer" }}
-                                        onClick={()=>handleDecreaseCart(product)}
-                                    />
-                                    <ProductAmount>
-                                        {product.cartQuantity}
-                                    </ProductAmount>
-                                    <Add
-                                        style={{ cursor: "pointer"}}
-                                        onClick={() => handleIncreaseCart(product)}
-                                    />
-                                </ProductAmountContainer>
-                                      <ProductPrice>${product.totalPrice}</ProductPrice>
-                            </PriceDetails>
-                        </Product>
-                        <Break />
-                        </>
-                        ))
-                        }
-                
-                </ProductInfo>
-                <Summary>
+                </Top>
+                <Bottom>
+                    <ProductInfo>
+                        {cart.map(product => (
+                            <>
+                            <Product>
+                                <ProductDetails>
+                                    <RemoveImgContainer>
+                                        <Image src={product[0].img}/>
+                                        <RemoveBtn onClick={() => handleRemoveFromCart(product)}>remove</RemoveBtn>    
+                                    </RemoveImgContainer>
+                                    <Details>
+                                        <ProductName>
+                                            <b>product: </b>
+                                            {product[0].title}
+                                        </ProductName>
+                                        <ProductSize>
+                                            <b>Size: </b>
+                                            {product.cartSize}
+                                        </ProductSize>
+                                    </Details>
+                                </ProductDetails>
+                                <PriceDetails>
+                                    <ProductAmountContainer>
+                                        <Remove
+                                            style={{ cursor: "pointer" }}
+                                            onClick={()=>handleDecreaseCart(product)}
+                                        />
+                                        <ProductAmount>
+                                            {product.cartQuantity}
+                                        </ProductAmount>
+                                        <Add
+                                            style={{ cursor: "pointer"}}
+                                            onClick={() => handleIncreaseCart(product)}
+                                        />
+                                    </ProductAmountContainer>
+                                        <ProductPrice>${product.totalPrice}</ProductPrice>
+                                </PriceDetails>
+                            </Product>
+                            <Break />
+                            </>
+                            ))
+                            }
+                    
+                    </ProductInfo>
+                    <Summary>
 
-                    <SummaryTitle>order summary</SummaryTitle>
-                    <SummaryItem>
-                        <SummaryItemText>subtotal</SummaryItemText>
-                          <SummaryItemPrice>${totals.cartTotalPrice}</SummaryItemPrice>
-                    </SummaryItem>
-                    <SummaryItem>
-                        <SummaryItemText>shipping</SummaryItemText>
-                        <SummaryItemPrice>$20</SummaryItemPrice>
-                    </SummaryItem>
-                    <SummaryItem type="total">
-                        <SummaryItemText >total</SummaryItemText>
-                          <SummaryItemPrice>${totals.cartTotalPrice + 20}</SummaryItemPrice>
-                      </SummaryItem>
-                      <StripeCheckout 
-                        name="FIGARO"
-                        billingAddress
-                        shippingAddress
-                        description={`Your total is $${totals.cartTotalPrice + 20}`}
-                        amount={(totals.cartTotalPrice + 20) * 100}
-                        token={onToken}
-                        stripeKey={KEY}
-                      >
-                        <SummaryBtn>checkout</SummaryBtn>
+                        <SummaryTitle>order summary</SummaryTitle>
+                        <SummaryItem>
+                            <SummaryItemText>subtotal</SummaryItemText>
+                            <SummaryItemPrice>${totals.cartTotalPrice}</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>shipping</SummaryItemText>
+                            <SummaryItemPrice>$20</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem type="total">
+                            <SummaryItemText >total</SummaryItemText>
+                            <SummaryItemPrice>${totals.cartTotalPrice + 20}</SummaryItemPrice>
+                        </SummaryItem>
+                        <StripeCheckout 
+                            name="FIGARO"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $${totals.cartTotalPrice + 20}`}
+                            amount={(totals.cartTotalPrice + 20) * 100}
+                            token={onToken}
+                            stripeKey={KEY}
+                        >
+                            <SummaryBtn>checkout</SummaryBtn>
 
-                      </StripeCheckout>
+                        </StripeCheckout>
 
-                </Summary>
-                
-            </Bottom>
+                    </Summary>
+                    
+                </Bottom>
+                </>          
+                )}
         </Wrapper>
 
         <Footer />

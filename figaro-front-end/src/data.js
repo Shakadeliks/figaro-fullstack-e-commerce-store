@@ -71,7 +71,7 @@ export const productCategories = [
         id: 4,
         title: "sneakers",
         img: SneakerImg,
-        categ: "pants"
+        categ: "sneakers"
     },
 ]
 

@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import { ThemeProvider } from "styled-components"
 import { Provider } from 'react-redux';
-import store from './Redux/store';
+import {store, persistor} from './Redux/store';
 import { getTotals } from './Redux/cartRedux';
-
+import { PersistGate } from 'redux-persist/integration/react';
 
 const theme = {
   primary: {
@@ -32,10 +32,12 @@ store.dispatch(getTotals());
 ReactDOM.render(
 <React.StrictMode>
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-    </Provider>
+    <PersistGate loading={null} persistor={persistor}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </PersistGate>
+  </Provider>
 </React.StrictMode>,
   document.getElementById('root')
 );

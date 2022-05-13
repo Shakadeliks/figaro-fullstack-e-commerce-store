@@ -17,6 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { getTotals } from '../../Redux/cartRedux';
+import { logout } from '../../Redux/userRedux';
 
 const StyledBadge = styled(Badge)({
     "& .MuiBadge-badge": {
@@ -31,9 +32,11 @@ const Navbar = () => {
     const theme = useTheme();
     const dispatch = useDispatch(); 
     const quantity = useSelector(state => state.cart.cartTotalQuantity);
-    const cart = useSelector(state => state.cart.cartProducts)
+    const cart = useSelector(state => state.cart.cartProducts);
+    const user = useSelector(state => state.user.currentUser);
  // state and function to enable toggle between mobile nav open and close
 
+    console.log(user)
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     const navMenuToggle = () => {
@@ -45,7 +48,9 @@ const Navbar = () => {
         dispatch(getTotals());
     }, [cart])
 
-
+    const handleLogout = () => {
+        dispatch(logout());
+    }
 
   return (
     <>
@@ -83,12 +88,39 @@ const Navbar = () => {
                     <MenuItem onClick={navMenuToggle} closeBtn="true">
                         <Close style={{fontSize: "2rem"}}/>
                     </MenuItem>
-                    <MenuItem>
-                        Register
-                    </MenuItem>
-                    <MenuItem>
-                        Sign In
-                    </MenuItem>
+                    {user 
+                        ? <> 
+                            <MenuItem user="user">
+                                Hi, {user.firstName}
+                            </MenuItem>
+                            <MenuItem onClick={handleLogout}>
+                                Sign Out
+                            </MenuItem>
+                        </>
+                        : <> 
+                            <MenuItem>
+                                <Link 
+                                    to="/signup"
+                                    style={{
+                                        color: "white",
+                                        textDecoration: "none"}}
+                                >
+                                    Register
+                                </Link>
+                            </MenuItem>
+                            <MenuItem>
+                                <Link 
+                                    to="/login"
+                                    style={{
+                                        color: "white",
+                                        textDecoration: "none"}}
+                                >
+                                    Sign In
+                                </Link>
+                            </MenuItem>
+                        </> 
+                        
+                    }
                     
                     <MenuItem>
                         <Link to="/cart">

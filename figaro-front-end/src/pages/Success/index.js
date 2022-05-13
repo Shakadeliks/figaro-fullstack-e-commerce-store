@@ -6,38 +6,41 @@ import { Link } from 'react-router-dom';
 
 
 const Success = () => {
-    const location = useLocation();//to use the state passed upon payment in Cart component
+    const {state} = useLocation();//to use the state passed upon payment in Cart component
 
-    const data = location.state.data;
-    const cart = location.state.products;
-    const totals = location.state.totals;
-    // console.log(data, cart);
+    const data = state.data;
+    const cart = state.products;
+    const totals = state.totals;
 
     const currentUser = useSelector(state => state.user.currentUser);
+    
     const [orderId, setOrderId] = useState(null);
+
+    console.log(state);
 
     useEffect(() => {
         const createOrder = async () => {
-            try {
-                const res = await userRequest.post("/orders", {
-                    userId: currentUser._id,
-                    products: cart.map(item => ({
-                        productId: item._id,
-                        quantity: item.cartQuantity
-                    })),
-                    amount: totals.cartTotalPrice,
-                    address: data.billing_details.address
-                });
-
-                setOrderId(res.data._id);
-
-            } catch { }
+        
+            const res = await userRequest.post("/order", {
+                userId: currentUser._id,
+                products: cart.map(item => ({
+                    productId: item[0]._id,
+                    quantity: item.cartQuantity
+                })),
+                amount: totals.cartTotalPrice,
+                delAddress: data.billing_details.address
+            });
+            console.log(res);
+            setOrderId(res.data.id);
+            console.log(orderId);
+            
         };
 
         data && createOrder();
-    }, [cart, data, currentUser]);
+    }, [cart, data, currentUser, totals.cartTotalPrice, orderId]);
     
-    
+    console.log(orderId);
+
   return (
       <div
         style={{

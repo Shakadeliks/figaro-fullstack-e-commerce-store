@@ -2,7 +2,8 @@ const express = require('express');
 const { verify } = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../Models/User')
-const { verifyTokenAndAuthorization, verifyToken, verifyTokenAndAdmin } = require("./verifyToken")
+const { verifyTokenAndAuthorization, verifyToken, verifyTokenAndAdmin } = require("./verifyToken");
+
 
 //UPDATING USER INFORMATION
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {

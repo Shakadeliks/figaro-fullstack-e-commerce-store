@@ -25,9 +25,9 @@ const HomeProducts = () => {
     }, [])
 
     //shuffle the product array 
-    const productArrShuffle = [...products].sort( () => 0.5 - Math.random() );
-    //get new array of the first 8 product objects, so different products can be displayed on each load on home page
-    
+  const productArrShuffle = [...products].sort(() => 0.5 - Math.random());
+  
+    //get new array of the first 8 product objects, so different products can be displayed on each load on home page  
     let randomHomeProducts = productArrShuffle.slice(0, 8);
 
 
