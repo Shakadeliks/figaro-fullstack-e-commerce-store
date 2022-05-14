@@ -1,9 +1,12 @@
 {
+  "homepage": "http://Shakadeliks.github.io/figaro-fullstack-e-commerce-store",
   "name": "figaro-back-end",
   "version": "1.0.0",
   "description": "backend rest api server for figaro e-commerce store",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "npx nodemon ./src/index.js"
   },
   "author": "Olwethu \"Shak\" Matiwana",
@@ -17,6 +20,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
+    "gh-pages": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4",
     "stripe": "^8.219.0"
