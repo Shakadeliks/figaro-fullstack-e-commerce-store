@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { largeMobile, mobile, mediumDesktop } from "../../responsive"
+import { largeMobile, mediumDesktop } from "../../responsive"
 
 export const Container = styled.nav` 
     background-color: ${ ({ theme: {primary} }) => primary.main};// syntax to destructure theme props object to avoid repitition

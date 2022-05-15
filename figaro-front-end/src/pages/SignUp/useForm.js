@@ -1,8 +1,8 @@
 // custom hook for form validation
 import { register } from "../../Redux/userApiCalls";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { useState, useEffect} from "react";
+import { useState } from "react";
 
 const useForm = (validate) => {
 
@@ -15,7 +15,7 @@ const useForm = (validate) => {
     });
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [ setIsSubmitting] = useState(false);
 
 
     const onChange = (e) => {

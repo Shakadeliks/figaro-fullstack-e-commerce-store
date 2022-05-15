@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
     Container,
     Wrapper,
@@ -17,7 +16,7 @@ import { useSelector } from 'react-redux';
 const SignUp = () => {
 
     const { onChange, values, handleSubmit, errors } = useForm(validate);
-    const {isFetching, error} = useSelector(state=> state.user)
+    const { isFetching } = useSelector(state => state.user);
     
 
   return (

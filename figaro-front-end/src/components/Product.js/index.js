@@ -1,11 +1,10 @@
-import { FavoriteRounded, SearchRounded, ShoppingCartRounded } from '@material-ui/icons';
+import { FavoriteRounded, SearchRounded } from '@material-ui/icons';
 import React from 'react'
 import {
     Container,
     Image,
     Info,
-    Icon,
-    Circle } from './Product.style';
+    Icon, } from './Product.style';
 import { Link } from "react-router-dom"    
 
 const Product = ({ item }) => {

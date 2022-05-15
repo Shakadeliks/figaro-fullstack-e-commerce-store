@@ -1,12 +1,10 @@
 import {createTheme, ThemeProvider } from "@material-ui/core";
 import Cart from "./pages/Cart";
-import { Product } from "./pages/Cart/Cart.styles";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
 import ProductPage from "./pages/ProductPage";
 import SignUp from "./pages/SignUp";
-import Products from "./components/Products";
 import {
     BrowserRouter as Router,
     Route,

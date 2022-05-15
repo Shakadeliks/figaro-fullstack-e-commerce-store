@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { mobile, mediumTablet, largeMobile } from "../../responsive"
+import { mobile, mediumTablet } from "../../responsive"
 
 
 export const Container = styled.div`

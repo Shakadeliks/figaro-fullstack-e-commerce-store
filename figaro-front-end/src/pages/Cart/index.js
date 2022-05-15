@@ -30,7 +30,6 @@ import {
     SummaryItemText,
     RemoveBtn,
     RemoveImgContainer} from './Cart.styles';
-import { popularProducts } from "../../data"
 import { Add, Remove } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { decreaseCartQuantity, addOneToCart, removeFromCart } from '../../Redux/cartRedux';

@@ -21,10 +21,8 @@ import {
     Amount,
     AddToCartBtn,
     } from './ProductPage.styles';
-import { productCategories } from '../../data';
 import { Add, Remove } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-import {publicRequest} from "../../requestMethods"
 import axios from "axios";
 import { addToCart } from "../../Redux/cartRedux";
 import { useDispatch } from 'react-redux';

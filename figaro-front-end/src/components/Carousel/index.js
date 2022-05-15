@@ -12,8 +12,6 @@ import {
 import { carouselItems } from '../../data'  
 import React, { useState } from 'react';
 import { ArrowBackRounded, ArrowForwardRounded } from '@material-ui/icons';
-import CarouselImg from '../../assets/carousel-img1.jpg'
-
 
 const Carousel = () => {
   //state for tracking the scrolling of carousel slides index

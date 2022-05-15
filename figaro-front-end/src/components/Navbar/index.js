@@ -32,7 +32,6 @@ const Navbar = () => {
     const theme = useTheme();
     const dispatch = useDispatch(); 
     const quantity = useSelector(state => state.cart.cartTotalQuantity);
-    const cart = useSelector(state => state.cart.cartProducts);
     const user = useSelector(state => state.user.currentUser);
  // state and function to enable toggle between mobile nav open and close
 
@@ -46,7 +45,7 @@ const Navbar = () => {
 
     useEffect(() => {
         dispatch(getTotals());
-    }, [cart])
+    }, [dispatch])
 
     const handleLogout = () => {
         dispatch(logout());

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from './HomeProducts.styles';
-import { popularProducts } from '../../data';
 import Product from '../Product.js';
 import axios from "axios"
 const HomeProducts = () => {

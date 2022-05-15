@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from './Products.styles';
-import { popularProducts } from '../../data';
 import Product from '../Product.js';
 import axios from "axios"
 
@@ -21,7 +20,8 @@ const Products = ({ categ, sort }) => {
       } catch (error) { }
     }
     getProducts();
-  }, [categ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categ, products])
 
   useEffect( () => {
     if( sort === "newest") {

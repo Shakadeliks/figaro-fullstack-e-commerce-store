@@ -5,7 +5,6 @@ import {
     Title,
     Form,
     Input,
-    Agreement,
     SubmitBtn,
     Link,
     Error

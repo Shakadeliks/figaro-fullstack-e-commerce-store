@@ -17,7 +17,6 @@ import {
     Pinterest,
     Twitter,
     Instagram,
-    Facebook, 
     FaceRounded,
     RoomOutlined,
     PhoneOutlined,

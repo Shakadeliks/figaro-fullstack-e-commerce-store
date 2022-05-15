@@ -29,6 +29,7 @@ const ProductList = () => {
                 return "Sneakers";
             case "pants":
                 return "Pants"
+            default:
         }
     }
 
