@@ -32,7 +32,7 @@ const Navbar = () => {
     const theme = useTheme();
     const dispatch = useDispatch(); 
     const quantity = useSelector(state => state.cart.cartTotalQuantity);
-    const user = useSelector(state => state.user.currentUser);
+     const user = useSelector(state => state.user.currentUser);
  // state and function to enable toggle between mobile nav open and close
 
     console.log(user)

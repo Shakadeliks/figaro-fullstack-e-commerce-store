@@ -24,14 +24,14 @@ import {
 import { Add, Remove } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
-import { addToCart } from "../../Redux/cartRedux";
-import { useDispatch } from 'react-redux';
+import { addToCart, getTotals } from "../../Redux/cartRedux";
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductPage = () => {
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-
+  const cart = useSelector(state=> state.cart.cartProducts)
   const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
@@ -51,6 +51,10 @@ const ProductPage = () => {
     getProduct();
 
   }, [id])
+
+  useEffect(() => {
+    dispatch(getTotals())
+  }, [cart, dispatch])
 
 
   const handleQuantity = (type) => {

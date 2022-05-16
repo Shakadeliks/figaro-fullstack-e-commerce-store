@@ -32,7 +32,7 @@ import {
     RemoveImgContainer} from './Cart.styles';
 import { Add, Remove } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { decreaseCartQuantity, addOneToCart, removeFromCart } from '../../Redux/cartRedux';
+import { decreaseCartQuantity, addOneToCart, removeFromCart, getTotals } from '../../Redux/cartRedux';
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../../requestMethods";
 import {useNavigate, Link} from "react-router-dom";
@@ -83,6 +83,10 @@ const Cart = () => {
         stripeToken && makeRequest();
     }, [stripeToken, totals, navigate, cart])
 
+    useEffect(() => {
+        dispatch(getTotals())
+      }, [cart, dispatch])
+
   return (
     <Container>
         <Navbar />
@@ -102,12 +106,7 @@ const Cart = () => {
                 <Top>
 
                     <TopBtn>continue shopping</TopBtn>
-                    <TopInfo>
-                        <TopText>shopping bag({quantity})</TopText>
-                        {/* <TopText>your wishlist(2)</TopText> */}
-
-                    </TopInfo>
-                    <TopBtn type='filled'>checkout</TopBtn>
+ 
 
                 </Top>
                 <Bottom>
