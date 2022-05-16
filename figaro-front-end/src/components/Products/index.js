@@ -21,7 +21,7 @@ const Products = ({ categ, sort }) => {
     }
     getProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categ, products])
+  }, [categ])
 
   useEffect( () => {
     if( sort === "newest") {
@@ -31,7 +31,7 @@ const Products = ({ categ, sort }) => {
     } else {
       products.sort( (a, b) => b.price - a.price)
     }
-  }, [sort])
+  }, [sort, products])
 
   return (
     <Container>
