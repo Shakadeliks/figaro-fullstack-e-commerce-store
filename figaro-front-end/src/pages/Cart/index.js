@@ -8,7 +8,6 @@ import {
     Top,
     Bottom,
     TopBtn,
-    TopInfo,
     TopText,
     ProductInfo,
     Summary,
@@ -44,7 +43,6 @@ const Cart = () => {
 
     const cart = useSelector(state => state.cart.cartProducts);
     const totals = useSelector(state => state.cart)
-    const quantity = useSelector(state => state.cart.cartTotalQuantity);
 
     const [stripeToken, setStripeToken] = useState(null);
     const dispatch = useDispatch();
