@@ -1,13 +1,12 @@
 {
-  "homepage": "http://Shakadeliks.github.io/figaro-fullstack-e-commerce-store",
   "name": "figaro-back-end",
   "version": "1.0.0",
   "description": "backend rest api server for figaro e-commerce store",
   "main": "index.js",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "npx nodemon ./src/index.js"
+  
+    "start": "node ./src/index.js",
+    "heroku-postbuild": "cd figaro-front-end && npm install && npm run build"
   },
   "author": "Olwethu \"Shak\" Matiwana",
   "license": "ISC",

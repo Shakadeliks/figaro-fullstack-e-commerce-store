@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 // ROUTES
 const userRoute = require('./routes/user');
@@ -19,22 +18,28 @@ const cors = require('cors');
 dotenv.config();
 //MONGODB CONNECTION 
 // mongodb+srv://olwethumatiwana:<password>@figaro.nekq8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-
-const DbUrl = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@figaro.nekq8.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`
-
-mongoose.connect(DbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => app.listen(process.env.PORT))
-    .catch((error) => console.log(error));    
-
+const port = process.env.PORT || 3000;
+const DbUrl = process.env.MONGODB_URL || `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@figaro.nekq8.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`
 
 app.use(cors({
     origin: "*",
 }));
-app.use(bodyParser());
 app.use('/api/auth', authRoute);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "../figaro-front-end/build")))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join((__dirname, "../figaro-front-end/build", "index.html")))
+})
+
+app.listen(port, () => console.log(`server is at port ${port}`));
+
+mongoose.connect(DbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => console.log("db connected"))
+    .catch((error) => console.log(error));    
 
